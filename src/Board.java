@@ -4,6 +4,11 @@ public class Board {
 
   private Tile[][] tiles;
 
+  // constructor
+  public Board(int size) {
+    create(size);
+  }
+
   public boolean isLost() {
     // later
     return false;
@@ -14,16 +19,31 @@ public class Board {
     return false;
   }
 
+  public void create(int size) {
+    // create a 2D array of tiles
+    tiles = new Tile[size][size];
+    for (int r = 0; r < size; r++) {
+      for (int c = 0; c < size; c++) {
+        tiles[r][c] = new Tile();
+      }
+    }
+  }
+
   public void setMines(int r, int c) {
-    // set mines randomly
-    tiles = new Tile[r][c];
-    for (int i = 0; i < r; i++) {
-      for (int j = 0; j < c; j++) {
-        if (Math.random() < 0.1) {
-          tiles[i][j] = new Tile(true);
-        } else {
-          tiles[i][j] = new Tile(false);
-        }
+    // set mines randomly, ensure that r,c is not a mine using a while loop
+    int mines = (int) (tiles.length * tiles[0].length * 0.15);
+    int i = 0;
+    while (i < mines) {
+      int x = (int) (Math.random() * tiles.length);
+      int y = (int) (Math.random() * tiles[0].length);
+      if (x != r && y != c) {
+        tiles[x][y].setMine();
+        i++;
+      }
+    }
+    for(int row = 0; row < tiles.length; row++) {
+      for(int col = 0; col < tiles[0].length; col++) {
+        tiles[row][col].setNearMines(getNearMines(row, col));
       }
     }
   }

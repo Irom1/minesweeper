@@ -4,16 +4,17 @@ public class Tile {
     private final int CLOSED = 0;
     private final int FLAGGED = 1;
     private final int OPEN = 2;
-    private int state = CLOSED;
+    private int state;
     private boolean hasMine;
     private int nearMines;
 
-    // constructor
-    public Tile(boolean hasMine) {
-      this.hasMine = hasMine;
-      this.nearMines = 0;
+    // constructor - sets all the instance variables
+    public Tile() {
+      state = CLOSED;
+      hasMine = false;
+      nearMines = 0;
     }
-    
+    // ac
     public boolean isFlagged () {
       return state == FLAGGED;
     }
@@ -26,6 +27,7 @@ public class Tile {
     public int getNearMines () {
       return nearMines;
     }
+    // mutators
     public void toggleFlag () {
       if (state == CLOSED) {
         state = FLAGGED;
@@ -33,14 +35,16 @@ public class Tile {
         state = CLOSED;
       }
     }
+    public void setMine () {
+      hasMine = true;
+    }
     public void setNearMines (int mines) {
       nearMines = mines;
     }
     public void open () {
       state = OPEN;
     }
-
-    /* Draw function */
+    /* Draw functionality */
     public void draw (PApplet p, int y, int x) {
       int size = 50;
       p.stroke(1);
@@ -58,7 +62,7 @@ public class Tile {
         }
       } else if (state == FLAGGED) {
         p.fill(255, 0, 0);
-        p.triangle(x * size, y, x * size, y * size, x, y * size);
+        p.triangle(x * size, y * size, x * size, y * size, x, y * size);
       }
       //System.out.println("Drawing tile at " + x + ", " + y);
     }

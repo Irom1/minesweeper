@@ -4,19 +4,17 @@ public class MineSweeper extends PApplet {
 
   private Board board;
   private Timer timer;
-  
-  public MineSweeper () {
-    board = new Board ();
-    timer = new Timer (this);
-  }
+  String state;
   
   public void settings() {
     size(500, 500);
   }
 
   public void setup() {
-    fill(255);
-    startGame();
+    fill(0);
+    board = new Board (10);
+    timer = new Timer (this);
+    state = "reset";
   }
 
   public void draw() {
@@ -31,6 +29,10 @@ public class MineSweeper extends PApplet {
     // get row and column
     int r = mouseY / 50;
     int c = mouseX / 50;
+    // if first click, set the mines
+    if (state == "reset") {
+      startGame(r, c);
+    }
     // convert mouseButton to string
     String button = "";
     if (mouseButton == LEFT) {
@@ -59,10 +61,20 @@ public class MineSweeper extends PApplet {
   }
 
   /* UI functions */
-  public void startGame() {
+  public void startGame(int r, int c) {
     // start timer
     timer.start();
     // set mines
-    board.setMines(10, 10);
+    board.setMines(r, c);
+    // set state
+    state = "playing";
+  }
+  public void resetGame() {
+    // reset timer
+    timer.reset();
+    // reset board
+    board.create(10);
+    // reset state
+    state = "reset";
   }
 }
