@@ -24,13 +24,23 @@ public class MineSweeper extends PApplet {
     //ellipse(mouseX, mouseY, 25, 25);
     // display timer
     text(timer.getTime(), 10, 10);
-
+    board.draw(this);
   }
 
   public void mouseClicked () {
     // get row and column
     int r = mouseY / 50;
     int c = mouseX / 50;
+    // convert mouseButton to string
+    String button = "";
+    if (mouseButton == LEFT) {
+      button = "left";
+    } else if (mouseButton == RIGHT) {
+      button = "right";
+    } else if (mouseButton == CENTER) {
+      button = "center";
+    }
+    System.out.println(button + " clicked at: row " + r + ", column " + c);
     // if left click
     if (mouseButton == LEFT) {
       // reveal tile
