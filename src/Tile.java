@@ -67,7 +67,7 @@ public class Tile {
           // font size is 1/2 of the size of the square
           p.textSize(size/2);
           p.textAlign(p.CENTER, p.CENTER);
-          p.text(nearMines, x * size + size/4, y * size + size/2);
+          p.text(nearMines, x * size + 25, y * size + 20);
         }
       } else if (state == FLAGGED) {
         // red triangle in square when flagged

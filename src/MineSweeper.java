@@ -21,8 +21,30 @@ public class MineSweeper extends PApplet {
 
   public void draw() {
     background(163, 163, 194);
-    // display timer at bottom left
-    text(timer.getTime(), 20, 50 * size + 20);
+    // bottom text elms
+    fill(0);
+    textSize(20);
+    textAlign(LEFT, CENTER);
+    int size = 16; // max board size for displaying bottom text
+    // display timer at bottom left or reset text
+    if(state == "reset") {
+      text("Click any tile to start", 20, 50 * size + 20);
+    } else text(timer.getTime(), 20, 50 * size + 20);
+    // display board size at bottom center
+    textAlign(CENTER, CENTER);
+    String sizeText = "";
+    if (this.size == 8) {
+      sizeText = "Small";
+    } else if (this.size == 12) {
+      sizeText = "Medium";
+    } else if (this.size == 16) {
+      sizeText = "Large";
+    }
+    text("Size (Press 1, 2 or 3): " + sizeText, 50 * size / 2 - 20, 50 * size + 20);
+    // display difficulty at bottom right
+    textAlign(RIGHT, CENTER);
+    text("Difficulty (Press E, M or H): " + difficulty, 50 * size - 20, 50 * size + 20);
+    // display board
     board.draw(this);
   }
 
