@@ -14,7 +14,7 @@ public class Tile {
       hasMine = false;
       nearMines = 0;
     }
-    // ac
+    // accessors
     public boolean isFlagged () {
       return state == FLAGGED;
     }
