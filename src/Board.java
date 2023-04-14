@@ -29,16 +29,15 @@ public class Board {
     }
   }
 
-  public void setMines(int r, int c) {
-    // set mines randomly, ensure that r,c is not a mine using a while loop
-    int mines = (int) (tiles.length * tiles[0].length * 0.15);
-    int i = 0;
-    while (i < mines) {
-      int x = (int) (Math.random() * tiles.length);
-      int y = (int) (Math.random() * tiles[0].length);
-      if (x != r && y != c) {
-        tiles[x][y].setMine();
-        i++;
+  public void setMines(int r, int c, int mines) {
+    // set 30 mines randomly, ensure that r,c and the 8 squares around it are not mines using a while loop
+    int count = 0;
+    while (count < mines) {
+      int row = (int) (Math.random() * tiles.length);
+      int col = (int) (Math.random() * tiles[0].length);
+      if (!tiles[row][col].isMine() && !(row >= r - 1 && row <= r + 1 && col >= c - 1 && col <= c + 1)) {
+        tiles[row][col].setMine();
+        count++;
       }
     }
     for(int row = 0; row < tiles.length; row++) {
@@ -78,11 +77,16 @@ public class Board {
     return count;
   }
 
-  public void reveal(int r, int c) {
+  public void leftClick(int r, int c) {
     // reveal tile at r,c
     // if tile is a mine, end game
     // if tile is not a mine, reveal it
     // if tile has no mines around it, reveal surrounding tiles
+    // if tile is already open, run sweep
+    if(tiles[r][c].isOpen()) {
+      sweep(r, c);
+      return;
+    }
     if (tiles[r][c].isMine()) {
       revealAll();
     } else {
@@ -96,11 +100,11 @@ public class Board {
   public void revealSurrounding(int r, int c) {
     // reveal surrounding tiles
     // doesn't work rn as wanted
-    for (int i = r - 1; i <= r + 1; i++) {
-      for (int j = c - 1; j <= c + 1; j++) {
-        if (i >= 0 && i < tiles.length && j >= 0 && j < tiles[0].length) {
-          if (!tiles[i][j].isOpen()) {
-            reveal(i, j);
+    for (int row = r - 1; row <= r + 1; row++) {
+      for (int col = c - 1; col <= c + 1; col++) {
+        if (row >= 0 && row < tiles.length && col >= 0 && col < tiles[0].length) {
+          if (!tiles[row][col].isOpen()) {
+            leftClick(row, col);
           }
         }
       }
@@ -124,7 +128,7 @@ public class Board {
     // reveal all tiles
     for (int i = 0; i < tiles.length; i++) {
       for (int j = 0; j < tiles[0].length; j++) {
-        tiles[i][j].open();
+        tiles[i][j].open(true);
       }
     }
   }

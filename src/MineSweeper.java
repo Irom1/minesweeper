@@ -4,15 +4,17 @@ public class MineSweeper extends PApplet {
 
   private Board board;
   private Timer timer;
+  private int size = 12;
+  private double difficulty = 0.1;
   String state;
   
   public void settings() {
-    size(500, 500);
+    size(50 * size, 50 * (size + 1));
   }
 
   public void setup() {
     fill(0);
-    board = new Board (10);
+    board = new Board (size);
     timer = new Timer (this);
     state = "reset";
   }
@@ -39,24 +41,17 @@ public class MineSweeper extends PApplet {
       button = "left";
     } else if (mouseButton == RIGHT) {
       button = "right";
-    } else if (mouseButton == CENTER) {
-      button = "center";
-    }
+    } 
     System.out.println(button + " clicked at: row " + r + ", column " + c);
     // if left click
     if (mouseButton == LEFT) {
       // reveal tile
-      board.reveal(r, c);
+      board.leftClick(r, c);
     }
     // if right click
     if (mouseButton == RIGHT) {
       // flag tile
       board.flag(r, c);
-    }
-    // if middle click
-    if (mouseButton == CENTER) {
-      // reveal surrounding tiles
-      board.sweep(r, c);
     }
   }
 
@@ -65,7 +60,8 @@ public class MineSweeper extends PApplet {
     // start timer
     timer.start();
     // set mines
-    board.setMines(r, c);
+    int mines = (int) ((double) size * size * difficulty);
+    board.setMines(r, c, mines);
     // set state
     state = "playing";
   }
@@ -73,7 +69,7 @@ public class MineSweeper extends PApplet {
     // reset timer
     timer.reset();
     // reset board
-    board.create(10);
+    board.create(size);
     // reset state
     state = "reset";
   }
