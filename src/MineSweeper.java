@@ -4,8 +4,8 @@ public class MineSweeper extends PApplet {
 
   private Board board;
   private Timer timer;
-  private int size = 12;
-  private double difficulty = 0.1;
+  private int size = 16;
+  private double difficulty = 0.2;
   String state;
   
   public void settings() {
