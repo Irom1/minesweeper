@@ -1,4 +1,5 @@
 import processing.core.PApplet;
+import processing.core.PConstants;
 
 public class Tile {
     private final int CLOSED = 0;
@@ -66,7 +67,7 @@ public class Tile {
           p.fill(0);
           // font size is 1/2 of the size of the square
           p.textSize(size/2);
-          p.textAlign(p.CENTER, p.CENTER);
+          p.textAlign(PConstants.CENTER, PConstants.CENTER);
           p.text(nearMines, x * size + 25, y * size + 20);
         }
       } else if (state == FLAGGED) {
