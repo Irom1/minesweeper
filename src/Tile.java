@@ -20,7 +20,7 @@ public class Tile {
       return state == FLAGGED;
     }
     public boolean isOpen () {
-      return state != CLOSED;
+      return state == OPEN;
     }
     public boolean isMine () {
       return hasMine;
