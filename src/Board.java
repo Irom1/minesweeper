@@ -9,13 +9,27 @@ public class Board {
     create(size);
   }
 
-  public boolean isLost() {
-    // later
-    return false;
+  public boolean isWon() {
+    // check if all tiles are open
+    for (int row = 0; row < tiles.length; row++) {
+      for (int col = 0; col < tiles[0].length; col++) {
+        if (!tiles[row][col].isMine() && !tiles[row][col].isOpen()) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
-  public boolean isWon() {
-    // later
+    public boolean isLost() {
+    // check if a mine is open
+    for (int row = 0; row < tiles.length; row++) {
+      for (int col = 0; col < tiles[0].length; col++) {
+        if (tiles[row][col].isMine() && tiles[row][col].isOpen()) {
+          return true;
+        }
+      }
+    }
     return false;
   }
 
@@ -30,7 +44,8 @@ public class Board {
   }
 
   public void setMines(int r, int c, int mines) {
-    // set 30 mines randomly, ensure that r,c and the 8 squares around it are not mines using a while loop
+    // set 30 mines randomly, ensure that r,c and the 8 squares around it are not
+    // mines using a while loop
     int count = 0;
     while (count < mines) {
       int row = (int) (Math.random() * tiles.length);
@@ -40,8 +55,8 @@ public class Board {
         count++;
       }
     }
-    for(int row = 0; row < tiles.length; row++) {
-      for(int col = 0; col < tiles[0].length; col++) {
+    for (int row = 0; row < tiles.length; row++) {
+      for (int col = 0; col < tiles[0].length; col++) {
         tiles[row][col].setNearMines(getNearMines(row, col));
       }
     }
@@ -83,12 +98,12 @@ public class Board {
     // if tile is not a mine, reveal it
     // if tile has no mines around it, reveal surrounding tiles
     // if tile is already open, run sweep
-    if(tiles[r][c].isOpen()) {
+    if (tiles[r][c].isOpen()) {
       sweep(r, c);
-      return;
     }
     if (tiles[r][c].isMine()) {
-      revealAll();
+      // open mine
+      tiles[r][c].open();
     } else {
       tiles[r][c].open();
       if (getNearMines(r, c) == 0) {

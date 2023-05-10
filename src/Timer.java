@@ -18,7 +18,7 @@ public class Timer {
   public void start () {
     startTime = p.millis ();
   }
-  public void end () {
+  public void stop () {
     endTime = p.millis ();
   }
   public void reset () {
