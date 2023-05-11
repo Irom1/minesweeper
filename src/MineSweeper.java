@@ -62,10 +62,6 @@ public class MineSweeper extends PApplet {
     // get row and column
     int r = mouseY / 50;
     int c = mouseX / 50;
-    // if first click, set the mines
-    if (state == RESET) {
-      startGame(r, c);
-    }
     // convert mouseButton to string
     String button = "";
     if (mouseButton == LEFT) {
@@ -79,6 +75,10 @@ public class MineSweeper extends PApplet {
       System.out.println("click outside of board");
       // manage here
       return;
+    }
+    // if first click, set the mines
+    if (state == RESET) {
+      startGame(r, c);
     }
     if(state == LOST || state == WON) {
       return;
