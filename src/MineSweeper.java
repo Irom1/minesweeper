@@ -6,7 +6,7 @@ public class MineSweeper extends PApplet {
   private Timer timer;
   private int size = 16;
   private double difficulty = 0.2;
-  
+
   int state;
   private final int RESET = 0;
   private final int PLAYING = 1;
@@ -80,7 +80,7 @@ public class MineSweeper extends PApplet {
     if (state == RESET) {
       startGame(r, c);
     }
-    if(state == LOST || state == WON) {
+    if (state == LOST || state == WON) {
       return;
     }
     // if left click
@@ -94,10 +94,10 @@ public class MineSweeper extends PApplet {
       board.flag(r, c);
     }
     // check if game over
-    if(board.isLost()) {
+    if (board.isLost()) {
       state = LOST;
     }
-    if(board.isWon()) {
+    if (board.isWon()) {
       state = WON;
     }
     if (state == WON || state == LOST) {
@@ -107,14 +107,16 @@ public class MineSweeper extends PApplet {
       timer.stop();
     }
   }
-/**
- * On key press, change difficulty, board size or reset game
- * e, m, h = easy, medium, hard (change difficulty)
- * 1, 2, 3 = change board size
- * r = reset game
- * @param key
- * @param keyCode
- */
+
+  /**
+   * On key press, change difficulty, board size or reset game
+   * e, m, h = easy, medium, hard (change difficulty)
+   * 1, 2, 3 = change board size
+   * r = reset game
+   * 
+   * @param key
+   * @param keyCode
+   */
   public void keyPressed() {
     // e, m, h = easy, medium, hard (change difficulty)
     if (key == 'e') {
@@ -138,7 +140,9 @@ public class MineSweeper extends PApplet {
     }
   }
 
-  /* UI functions */
+  /**
+   * Display game over message
+   */
   public void gameOver() {
     // change font for big text message
     textAlign(CENTER, CENTER);
@@ -159,6 +163,13 @@ public class MineSweeper extends PApplet {
     text("Press R to reset", 50 * size / 2, 50 * size / 2 + 80);
   }
 
+  /**
+   * Start the game
+   * Set mines and start timer
+   * 
+   * @param r the row of the first click
+   * @param c the column of the first click
+   */
   public void startGame(int r, int c) {
     // start timer
     timer.start();
@@ -169,6 +180,10 @@ public class MineSweeper extends PApplet {
     state = PLAYING;
   }
 
+  /**
+   * Reset the game
+   * Reset timer, board and state
+   */
   public void resetGame() {
     // reset timer
     timer.reset();
